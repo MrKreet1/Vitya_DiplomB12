@@ -1,0 +1,8 @@
+method,structure_name,multiplicity,energy_key,energy_eh,summary_file
+screening,b12_hexagonal_prism,1,final_energy_eh,-297.79392165692,C:\Users\gnome\Desktop\Vitya_Diplom\Vitya_DiplomB12\02_screening_r2scan3c\summary.csv
+refinement,b12_hexagonal_prism,1,final_energy_eh,-297.794408679592,C:\Users\gnome\Desktop\Vitya_Diplom\Vitya_DiplomB12\03_refined_candidates\summary.csv
+frequencies,b12_hexagonal_prism,1,final_energy_eh,-297.79440867993,C:\Users\gnome\Desktop\Vitya_Diplom\Vitya_DiplomB12\04_frequencies\summary.csv
+spin_comparison,b12_hexagonal_prism,1,sp_energy_eh,-297.606945704388,C:\Users\gnome\Desktop\Vitya_Diplom\Vitya_DiplomB12\05_spin_comparison\summary.csv
+highlevel_sp,b12_hexagonal_prism,1,final_energy_eh,-297.606944496257,C:\Users\gnome\Desktop\Vitya_Diplom\Vitya_DiplomB12\06_highlevel_sp\summary.csv
+dlpno_check,b12_hexagonal_prism,1,final_energy_eh,-297.135984193233,C:\Users\gnome\Desktop\Vitya_Diplom\Vitya_DiplomB12\07_dlpno_check\summary.csv
+casscf_nevpt2,b12_hexagonal_prism,1,nevpt2_energy_eh,-297.050127607406,C:\Users\gnome\Desktop\Vitya_Diplom\Vitya_DiplomB12\08_casscf_nevpt2\summary.csv

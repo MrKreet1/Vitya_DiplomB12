@@ -1,0 +1,7 @@
+Spin comparison: b12_hexagonal_prism
+
+Lowest state: multiplicity 1
+
+mult=1  E=-297.6069457044 Eh  dE=0.0000000000 Eh  dE=0.0000 kJ/mol  dE=0.000000 eV
+mult=3  E=-297.5872464358 Eh  dE=0.0196992686 Eh  dE=51.7204 kJ/mol  dE=0.536044 eV
+mult=5  E=-297.5346328406 Eh  dE=0.0723128638 Eh  dE=189.8574 kJ/mol  dE=1.967733 eV

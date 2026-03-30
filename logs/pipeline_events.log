@@ -1,0 +1,8 @@
+[2026-03-30 21:20:38] START stage=finalize
+[2026-03-30 21:20:38] END stage=finalize table=final_method_comparison.csv text=final_conclusion.txt
+[2026-03-30 21:25:55] START stage=dlpno_check
+[2026-03-30 21:25:56] START stage=dlpno_check job=b12_hexagonal_prism_m1_dlpno mode=run xyz=b12_hexagonal_prism_m1_refine_saved.xyz mult=1
+[2026-03-30 22:56:20] END stage=dlpno_check job=b12_hexagonal_prism_m1_dlpno normal_termination=True energy=-297.135984193233
+[2026-03-30 22:56:20] END stage=dlpno_check jobs=1 summary=summary.csv
+[2026-03-30 22:58:39] START stage=finalize
+[2026-03-30 22:58:39] END stage=finalize table=final_method_comparison.csv text=final_conclusion.txt
