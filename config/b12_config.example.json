@@ -2,6 +2,7 @@
   "project_name": "B12 ORCA/OPI pipeline",
   "charge": 0,
   "screening_multiplicities": [1, 3, 5],
+  "enable_spin_comparison": false,
   "spin_comparison_multiplicities": [1, 3, 5],
   "resources": {
     "nprocs": 8,

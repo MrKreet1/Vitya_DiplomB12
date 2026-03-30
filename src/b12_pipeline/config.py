@@ -93,6 +93,7 @@ class ProjectConfig:
     project_name: str
     charge: int
     screening_multiplicities: list[int]
+    enable_spin_comparison: bool
     spin_comparison_multiplicities: list[int]
     resources: ResourcesConfig
     selection: SelectionConfig
@@ -194,6 +195,7 @@ def load_config(config_path: str | Path) -> ProjectConfig:
         project_name=str(payload.get("project_name", "B12 ORCA pipeline")),
         charge=int(payload.get("charge", 0)),
         screening_multiplicities=list(payload.get("screening_multiplicities", [1, 3, 5])),
+        enable_spin_comparison=bool(payload.get("enable_spin_comparison", False)),
         spin_comparison_multiplicities=list(
             payload.get("spin_comparison_multiplicities", [1, 3, 5])
         ),

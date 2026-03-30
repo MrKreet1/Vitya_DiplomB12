@@ -76,7 +76,8 @@ def main(argv: list[str] | None = None) -> int:
         run_selection(config)
         run_refinement(config, dry_run=args.dry_run)
         run_frequencies(config, dry_run=args.dry_run)
-        run_spin_comparison(config, dry_run=args.dry_run)
+        if config.enable_spin_comparison:
+            run_spin_comparison(config, dry_run=args.dry_run)
         run_highlevel_sp(config, dry_run=args.dry_run)
         run_dlpno_check(config, dry_run=args.dry_run)
         run_casscf_nevpt2(config, dry_run=args.dry_run)

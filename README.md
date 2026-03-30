@@ -8,7 +8,7 @@ Python-проект для автоматизированного исследо
 2. автоматический отбор низкоэнергетических кандидатов;
 3. уточнение геометрии;
 4. проверка минимумов по частотам;
-5. маршрут `OPT + FREQ + SP` для сравнения спиновых состояний;
+5. опциональный маршрут `OPT + FREQ + SP` для сравнения спиновых состояний;
 6. high-level single-point расчёты;
 7. контрольные `DLPNO-CCSD(T)`;
 8. `CASSCF / SC-NEVPT2` при наличии диагностических оснований;
@@ -52,6 +52,7 @@ b12_project/
 
 - `charge`
 - `screening_multiplicities`
+- `enable_spin_comparison`
 - `spin_comparison_multiplicities`
 - `resources.nprocs`
 - `resources.maxcore_mb`
@@ -92,11 +93,16 @@ python scripts/run_screening.py --config config/b12_config.example.json
 python scripts/select_candidates.py --config config/b12_config.example.json
 python scripts/run_refinement.py --config config/b12_config.example.json
 python scripts/run_frequencies.py --config config/b12_config.example.json
-python scripts/run_spin_comparison.py --config config/b12_config.example.json
 python scripts/run_highlevel_sp.py --config config/b12_config.example.json
 python scripts/run_dlpno_check.py --config config/b12_config.example.json
 python scripts/run_casscf_nevpt2.py --config config/b12_config.example.json
 python scripts/build_final_reports.py --config config/b12_config.example.json
+```
+
+Опционально, если всё же нужно отдельное сравнение мультиплетностей:
+
+```powershell
+python scripts/run_spin_comparison.py --config config/b12_config.example.json
 ```
 
 Полный прогон:
@@ -104,6 +110,8 @@ python scripts/build_final_reports.py --config config/b12_config.example.json
 ```powershell
 python scripts/run_full_pipeline.py --config config/b12_config.example.json
 ```
+
+По умолчанию `full` не запускает `spin_comparison`. Чтобы включить этот этап обратно, задайте `"enable_spin_comparison": true` в конфиге.
 
 ## Основные выходные файлы
 
@@ -169,6 +177,8 @@ python scripts/run_full_pipeline.py --config config/b12_config.example.json
 
 ### 4. Сравнение спиновых состояний
 
+Этот этап в текущей конфигурации проекта является опциональным и не входит в `full` по умолчанию. Ниже сохранены результаты уже выполненного тестового прогона, где он был запущен отдельно.
+
 Результаты маршрута `OPT + FREQ + SP` на уровне `r2SCAN-3c / r2SCAN-3c / PBE0-D4/def2-TZVPP`:
 [05_spin_comparison/summary.csv](/c:/Users/gnome/Desktop/Vitya_Diplom/Vitya_DiplomB12/05_spin_comparison/summary.csv)
 
@@ -208,7 +218,7 @@ python scripts/run_full_pipeline.py --config config/b12_config.example.json
 Для протестированной структуры `b12_hexagonal_prism` текущий прогон даёт следующие выводы:
 
 - наиболее вероятное основное состояние: `singlet`;
-- singlet устойчиво ниже triplet и quintet в рамках выполненного spin-comparison;
+- в выполненном тестовом spin-comparison singlet оказался ниже triplet и quintet;
 - singlet-геометрия подтверждена как минимум по данным частотного анализа;
 - high-level, DLPNO и multireference-этапы успешно выполнены и дают воспроизводимый набор контрольных энергий;
 - проект в текущем состоянии уже формирует полноценные summary-файлы и пригоден для подготовки материалов дипломной работы.
@@ -253,6 +263,30 @@ Get-Content .\logs\pipeline_events.log -Tail 30 -Wait
 ```powershell
 Select-String -Path .\07_dlpno_check\b12_hexagonal_prism\mult_1\b12_hexagonal_prism_m1_dlpno.out -Pattern "ORCA TERMINATED NORMALLY"
 ```
+
+## Ответы на частые вопросы
+
+### Проводилось ли в этих расчётах задание начальных координат с последующим поиском оптимальной геометрии и минимальной энергии?
+
+Да. В текущем прогоне это было сделано.
+
+Что именно происходило:
+
+- начальные координаты были заданы в файле [b12_hexagonal_prism.xyz](/c:/Users/gnome/Desktop/Vitya_Diplom/Vitya_DiplomB12/01_initial_structures/b12_hexagonal_prism.xyz);
+- ORCA выполнила геометрическую оптимизацию по этим координатам через последовательность итераций;
+- оптимизированная геометрия была сохранена в [b12_hexagonal_prism_m1_refine_saved.xyz](/c:/Users/gnome/Desktop/Vitya_Diplom/Vitya_DiplomB12/03_refined_candidates/b12_hexagonal_prism/mult_1/b12_hexagonal_prism_m1_refine_saved.xyz);
+- энергия оптимизированной структуры записана в [03_refined_candidates/summary.csv](/c:/Users/gnome/Desktop/Vitya_Diplom/Vitya_DiplomB12/03_refined_candidates/summary.csv) и составляет `-297.794408679592 Eh`.
+
+Что это означает:
+
+- для заданной стартовой геометрии был найден локальный минимум энергии;
+- это подтверждено частотным анализом: в [04_frequencies/summary.csv](/c:/Users/gnome/Desktop/Vitya_Diplom/Vitya_DiplomB12/04_frequencies/summary.csv) указано `nimag = 0`;
+- найденная структура является минимумом на поверхности потенциальной энергии для протестированного случая.
+
+Что это не означает:
+
+- это ещё не доказанный глобальный минимум всего кластера `B12`, потому что в текущем прогоне была использована только одна стартовая геометрия;
+- для вывода о наиболее устойчивом изомере всего `B12` нужно добавить несколько альтернативных `*.xyz` и повторить screening.
 
 ## Ограничения и замечания
 
